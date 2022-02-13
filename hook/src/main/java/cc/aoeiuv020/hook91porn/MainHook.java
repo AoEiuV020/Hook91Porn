@@ -2,6 +2,7 @@ package cc.aoeiuv020.hook91porn;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
@@ -32,6 +33,16 @@ public class MainHook implements IXposedHookLoadPackage {
                         if (homeBeanClass.isInstance(result)) {
                             homeBeanClass.getField("coins").setInt(result, 0);
                         }
+                    }
+                });
+        XposedHelpers.findAndHookMethod(
+                "com.dft.shot.android.h.F",
+                lpparam.classLoader,
+                "q",
+                new XC_MethodReplacement() {
+                    @Override
+                    protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                        return true;
                     }
                 });
     }
