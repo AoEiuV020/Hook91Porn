@@ -1,5 +1,12 @@
 package cc.aoeiuv020.hook91porn;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+
+import java.lang.reflect.Field;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
@@ -43,6 +50,22 @@ public class MainHook implements IXposedHookLoadPackage {
                     @Override
                     protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                         return true;
+                    }
+                });
+        XposedHelpers.findAndHookMethod(
+                "com.dft.shot.android.ui.LaunchActivity",
+                lpparam.classLoader,
+                "h",
+                boolean.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        Object a = param.thisObject.getClass().getField("a").get(param.thisObject);
+                        View G = (View)a.getClass().getField("G").get(a);
+                        G.postDelayed(() -> {
+                            G.setEnabled(true);
+                            G.performClick();
+                        }, 1000);
                     }
                 });
     }
