@@ -60,6 +60,12 @@ public class MainHook implements IXposedHookLoadPackage {
                 appStartBeanClass,
                 new XC_MethodHook() {
                     @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        Object appStartBean = param.args[0];
+                        appStartBeanClass.getField("isVip").setBoolean(appStartBean, true);
+                    }
+
+                    @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         Object a = param.thisObject.getClass().getField("a").get(param.thisObject);
                         View G = (View)a.getClass().getField("G").get(a);
