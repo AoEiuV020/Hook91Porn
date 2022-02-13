@@ -31,6 +31,7 @@ public class MainHook implements IXposedHookLoadPackage {
                         }
                         if (homeBeanClass.isInstance(result)) {
                             homeBeanClass.getField("is_ads").setBoolean(result, true);
+                            homeBeanClass.getField("coins").setInt(result, 0);
                         }
                     }
                 });
