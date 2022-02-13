@@ -73,5 +73,15 @@ public class MainHook implements IXposedHookLoadPackage {
                         G.performClick();
                     }
                 });
+        XposedHelpers.findAndHookMethod(
+                "com.dft.shot.android.ui.dialog.AdMessageDialog",
+                lpparam.classLoader,
+                "onStart",
+                new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        param.thisObject.getClass().getMethod("dismiss").invoke(param.thisObject);
+                    }
+                });
     }
 }
