@@ -52,20 +52,19 @@ public class MainHook implements IXposedHookLoadPackage {
                         return true;
                     }
                 });
+        Class<?> appStartBeanClass = XposedHelpers.findClassIfExists("com.dft.shot.android.bean.AppStartBean", lpparam.classLoader);
         XposedHelpers.findAndHookMethod(
                 "com.dft.shot.android.ui.LaunchActivity",
                 lpparam.classLoader,
-                "h",
-                boolean.class,
+                "a",
+                appStartBeanClass,
                 new XC_MethodHook() {
                     @Override
-                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         Object a = param.thisObject.getClass().getField("a").get(param.thisObject);
                         View G = (View)a.getClass().getField("G").get(a);
-                        G.postDelayed(() -> {
-                            G.setEnabled(true);
-                            G.performClick();
-                        }, 1000);
+                        G.setEnabled(true);
+                        G.performClick();
                     }
                 });
     }
