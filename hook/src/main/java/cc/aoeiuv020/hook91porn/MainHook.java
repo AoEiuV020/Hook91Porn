@@ -52,6 +52,16 @@ public class MainHook implements IXposedHookLoadPackage {
                         return true;
                     }
                 });
+        XposedHelpers.findAndHookMethod(
+                "com.dft.shot.android.h.F",
+                lpparam.classLoader,
+                "n",
+                new XC_MethodReplacement() {
+                    @Override
+                    protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                        return true;
+                    }
+                });
         Class<?> appStartBeanClass = XposedHelpers.findClassIfExists("com.dft.shot.android.bean.AppStartBean", lpparam.classLoader);
         XposedHelpers.findAndHookMethod(
                 "com.dft.shot.android.ui.LaunchActivity",
